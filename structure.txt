@@ -1,27 +1,17 @@
-ecommerce-site/
-│
-├── config/
-│   ├── config.json
-│   ├── database.js
-│
-├── controllers/
-│   ├── userController.js
-│
-├── middlewares/
-│   ├── authMiddleware.js
-│
-├── models/
-│   ├── index.js
-│   ├── user.js
-│
-├── routes/
-│   ├── userRoutes.js
-│
-├── services/
-│   ├── userService.js
-│
-├── utils/
-│   ├── responseFormatter.js
-│
-├── app.js
-└── package.json
+/ecommerce-api
+|--/node_modules
+|--/config
+|   |-- db.js
+|--/models
+|   |-- product.js
+|   |-- user.js
+|--/routes
+|   |-- productRoutes.js
+|   |-- userRoutes.js
+|--/controllers
+|   |-- productController.js
+|   |-- userController.js
+|--/middleware
+|   |-- authMiddleware.js
+|-- .env
+|-- server.js

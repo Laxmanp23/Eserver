@@ -7,6 +7,7 @@ const fs = require("fs");
 const path = require("path");
 // Define routes
 const userRoutes = require("./src/routes/userRoutes");
+const productRoutes = require('./src/routes/productRoutes');
 
 // Load environment variables from .env file
 // require("dotenv").config();
@@ -20,8 +21,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Other routes
-app.use("/api", userRoutes);
+
+// Import routes
+app.use("/api", userRoutes,productRoutes);
+// app.use("/api/createproduct",productRoutes)
 
 // Default home /api route
 app.get("/", (req, res) => {
