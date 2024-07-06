@@ -42,7 +42,7 @@ const certificate = fs.readFileSync(certificatePath, "utf8");
 const credentials = { key: privateKey, cert: certificate };
 
 sequelize.sync({ force: false }).then(() => {
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT || 3001;
   const httpsServer = https.createServer( credentials,app);
 
   httpsServer.listen(PORT, () => {

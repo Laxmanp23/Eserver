@@ -1,48 +1,44 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
-module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define(
-    "User", 
-    {
-      username: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-    // },
+/**
+ * Defines the User model.
+ * @param {Object} sequelize - The Sequelize instance.
+ * @param {Object} DataTypes - The data types module.
+ * @returns {Object} - The User model.
+ */
+
+const User = sequelize.define(
+  "User",
+  {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
+      },
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-    // },
+  {
+    timestamps: true, // This will add createdAt and updatedAt timestamps
   }
-    // id: {
-    //   type: DataTypes.INTEGER,
-    //   autoIncrement: true,
-    //   primaryKey: true,
-    // },
-    // username: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    //   unique: true,
-    // },
-    // email: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    //   unique: true,
-    // },
-    // password: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    // },
-  });
+);
 // Synchronize the model with the database
-sequelize.sync()
+sequelize
+  .sync()
   .then(() => {
-    console.log('User model synced successfully');
+    console.log("User model synced successfully");
   })
   .catch((error) => {
-    console.error('Error syncing User model:', error);
+    console.error("Error syncing User model:", error);
   });
-  return User;
-};
+
+module.exports = User;
