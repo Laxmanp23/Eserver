@@ -12,33 +12,30 @@ const User = sequelize.define(
   {
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
-      validate: {
-        isEmail: true,
-      },
+      unique: true
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
-    },
+      allowNull: false
+    }
   },
   {
     timestamps: true, // This will add createdAt and updatedAt timestamps
   }
 );
 // Synchronize the model with the database
-sequelize
-  .sync()
-  .then(() => {
-    console.log("User model synced successfully");
-  })
-  .catch((error) => {
-    console.error("Error syncing User model:", error);
-  });
+// sequelize
+//   .sync()
+//   .then(() => {
+//     console.log("User model synced successfully");
+//   })
+//   .catch((error) => {
+//     console.error("Error syncing User model:", error);
+//   });
 
 module.exports = User;
