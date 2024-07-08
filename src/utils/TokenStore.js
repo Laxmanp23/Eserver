@@ -1,8 +1,14 @@
 // utils/CustomTokenStorage.js
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/database");
 
-const Token = sequelize.define('Token', {
+const Token = sequelize.define(
+  "Token",
+  {
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -14,9 +20,11 @@ const Token = sequelize.define('Token', {
     expirationTime: {
       type: DataTypes.DATE,
       allowNull: false,
-    }
-  }, {
+    },
+  },
+  {
     // Additional model options can be placed here
-  });
-  
-  module.exports = Token;
+  }
+);
+
+module.exports = Token;

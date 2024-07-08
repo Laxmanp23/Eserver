@@ -10,7 +10,7 @@ const sequelize = require("../config/database");
 const User = sequelize.define(
   "User",
   {
-    name: {
+   username: {
       type: DataTypes.STRING,
       allowNull: false
     },
