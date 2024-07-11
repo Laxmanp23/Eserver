@@ -5,7 +5,6 @@ const authMiddleware = async (req, res, next) => {
     try {
         // Extract the token from the Authorization header
         const token = req.header('Authorization').replace('Bearer ', '');
-
         // Check if the token exists in the token store and is not expired
         const tokenData = await TokenStore.findOne({
             token: token,
