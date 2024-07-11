@@ -1,20 +1,36 @@
-// middleware/authMiddleware.js
-const jwt = require('jsonwebtoken');
+const User = require('../models/user');
+const TokenStore = require('../utils/TokenStore');
 
-const proteCt = (req, res, next) => {
-  const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
+const authMiddleware = async (req, res, next) => {
+    try {
+        // Extract the token from the Authorization header
+        const token = req.header('Authorization').replace('Bearer ', '');
 
-  if (!token) {
-    return res.status(401).json({ message: 'No token, authorization denied' });
-  }
+        // Check if the token exists in the token store and is not expired
+        const tokenData = await TokenStore.findOne({
+            token: token,
+            expirationTime: { $gt: new Date() } // Checks if the token is not expired
+        });
 
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded.id;
-    next();
-  } catch (err) {
-    res.status(401).json({ message: 'Token is not valid' });
-  }
+        if (!tokenData) {
+            throw new Error('Token is invalid or has expired');
+        }
+
+        // Find the user associated with the token
+        const user = await User.findById(tokenData.userId);
+
+        if (!user) {
+            throw new Error('No user found with this token');
+        }
+
+        // Attach user to the request object
+        req.user = user;
+        req.token = token;
+
+        next();
+    } catch (error) {
+        res.status(401).json({ message: 'Not authorized to access this resource', error: error.message });
+    }
 };
 
-module.exports = { proteCt };
+module.exports = authMiddleware;

@@ -9,9 +9,6 @@ const path = require("path");
 const userRoutes = require("./src/routes/userRoutes");
 const productRoutes = require('./src/routes/productRoutes');
 
-// Load environment variables from .env file
-// require("dotenv").config();
-
 const router = express.Router();
 
 // Enable CORS for all routes
@@ -30,9 +27,6 @@ app.use("/api", userRoutes,productRoutes);
 app.get("/", (req, res) => {
   res.send("welcome to Nodejs Server!");
 });
-// app.listen(3000, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
 
 // Load SSL certificate and private key
 const privateKeyPath = path.resolve(__dirname, "src/cert", "ers.key");
@@ -50,3 +44,19 @@ sequelize.sync({ force: false }).then(() => {
     console.log(`Server is running on port ${PORT}`);
   });
 });
+
+
+// /**
+//  * Synchronizes the Sequelize models with the database and starts the server.
+//  * 
+//  * @param {boolean} force - Whether to force sync the models with the database.
+//  * @returns {Promise} - A promise that resolves when the server is running.
+//  */
+// sequelize.sync({ force: false }).then(() => {
+//   const PORT = process.env.PORT || 3001;
+//   const httpServer = http.createServer(app);
+
+//   httpServer.listen(PORT, () => {
+//     console.log(`Server is running on port ${PORT}`);
+//   });
+// });
