@@ -8,17 +8,12 @@ const path = require("path");
 // Define routes
 const userRoutes = require("./src/routes/userRoutes");
 const productRoutes = require('./src/routes/productRoutes');
-
 const router = express.Router();
-
 // Enable CORS for all routes
 app.use(cors());
-
 // Parse JSON bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-
 // Import routes
 app.use("/api", userRoutes,productRoutes);
 // app.use("/api/createproduct",productRoutes)
@@ -40,23 +35,6 @@ sequelize.sync({ force: false }).then(() => {
   const httpsServer = https.createServer( credentials,app);
 
   httpsServer.listen(PORT, () => {
-    // console.log(`Serve is running on Port ${PORT}`);
     console.log(`Server is running on port ${PORT}`);
   });
 });
-
-
-// /**
-//  * Synchronizes the Sequelize models with the database and starts the server.
-//  * 
-//  * @param {boolean} force - Whether to force sync the models with the database.
-//  * @returns {Promise} - A promise that resolves when the server is running.
-//  */
-// sequelize.sync({ force: false }).then(() => {
-//   const PORT = process.env.PORT || 3001;
-//   const httpServer = http.createServer(app);
-
-//   httpServer.listen(PORT, () => {
-//     console.log(`Server is running on port ${PORT}`);
-//   });
-// });
