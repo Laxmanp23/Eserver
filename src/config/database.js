@@ -1,20 +1,4 @@
 
-
-// config/db.js
-// const { Sequelize } = require('sequelize');
-
-// const sequelize = new Sequelize({
-//   dialect: 'mariadb',  // Replace with your dialect, e.g., 'mysql'
-//   host: '129.154.34.108',    // Replace with your host
-//   port: 3000,           // Replace with your database port
-//   username: 'ecommerce',  // Replace with your database username
-//   password: 'ecommerce12345',  // Replace with your database password
-//   database: 'ecommerce',  // Replace with your database name
-// });
-
-// module.exports = sequelize;
-
-
 const { Sequelize } = require('sequelize');
 // require('dotenv').config(); // Add this line to load environment variables
 
@@ -32,7 +16,5 @@ const sequelize = new Sequelize({
   },
   logging: true, // Enable debug logging
 });
-
-//  console.log("DB_HOST:", process.env.DB_HOST);
 
 module.exports = sequelize;

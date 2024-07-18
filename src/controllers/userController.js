@@ -5,11 +5,6 @@ const User = require("../models/user");
 const TokenStore = require("../utils/TokenStore");
 const bodyParser = require("body-parser");
 const app = express();
-
-// Parse application/json
-app.use(bodyParser.json());
-// Parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
 // registerUser
 const registerUser = async (req, res) => {
   const { username, email, password } = req.body;
@@ -82,40 +77,39 @@ const loginUser = async (req, res) => {
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-if(!isMatch){
-  return res.status(404).json({message : "username password not match"});
-}
-if (isMatch) {
-  let token = await TokenStore.findOne({ where: { userId: user.id } });
-  console.log()
-  if (token) {
-    if (token.expirationTime < new Date()) {
-      token.token = crypto.randomBytes(48).toString("hex");
-      token.expirationTime = new Date();
-      token.expirationTime.setHours(token.expirationTime.getHours() + 1);
-      await token.save();
+    if (!isMatch) {
+      return res.status(404).json({ message: "username password not match" });
     }
-   } 
-   else {
-    token = await TokenStore.update({
-      username: user.username,
-      userId: user.id,
-      token: crypto.randomBytes(48).toString("hex"),
-      expirationTime: new Date(),
-    });
-    token.expirationTime.setHours(token.expirationTime.getHours() + 2);
-  }
-  res.status(200).json({
-    message: "User successfully logged in",
-    userData: {
-      id: user.id,
-      username: user.username,
-      email: user.email,
-    },
-    token: token.token,
-  });
-}
-
+    if (isMatch) {
+      let token = await TokenStore.findOne({ where: { userId: user.id } });
+      console.log();
+      if (token) {
+        if ((token.expirationTime = new Date())) {
+          token.token = crypto.randomBytes(48).toString("hex");
+          token.expirationTime = new Date();
+          token.expirationTime.setHours(token.expirationTime.getHours() + 1);
+          await token.save();
+        }
+      } else {
+        token = await TokenStore.update({
+          username: user.username,
+          userId: user.id,
+          token: crypto.randomBytes(48).toString("hex"),
+          expirationTime: new Date(),
+        });
+        token.expirationTime.setHours(token.expirationTime.getHours() + 2);
+      }
+      res.status(200).json({
+        message: "User successfully logged in",
+        userData: {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+        },
+        token: token.token,
+        expiretime: token.expirationTime,
+      });
+    }
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Login failed", error: err.message });
@@ -124,17 +118,23 @@ if (isMatch) {
 
 //user logout function
 const logoutUser = async (req, res) => {
-  const token = req.headers.authorization.substring(7);// Assuming you have the user ID in the request object
-  // console.log(token)
-  try {
-    await TokenStore.deleteOne({ token:token });
-    res.status(200).json({ message: "User successfully logged out" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Logout failed", error: err.message });
+  if ((token.expirationTime = new Date())) {
+    // token.token = crypto.randomBytes(48).toString("hex");
+    token.expirationTime = new Date();
+    token.expirationTime.setHours(token.expirationTime.getHours() + 0);
+    await token.save();
   }
-};
 
+  // const token = req.headers.authorization.substring(7);// Assuming you have the user ID in the request object
+  // // console.log(token)
+  // try {
+  //   await TokenStore.deleteOne({ token:token });
+  //   res.status(200).json({ message: "User successfully logged out" });
+  // } catch (err) {
+  //   console.error(err);
+  //   res.status(500).json({ message: "Logout failed", error: err.message });
+  // }
+};
 
 module.exports = {
   registerUser,
