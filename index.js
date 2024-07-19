@@ -10,22 +10,9 @@ const userRoutes = require("./src/routes/userRoutes");
 const productRoutes = require('./src/routes/productRoutes');
 // Enable CORS for all routes
 app.use(cors());
-// Define CORS options
-// const corsOptions = {
-//   origin: 'https://efrontend-two.vercel.app', // or whatever your front-end origin is
-//   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-// };
-// app.use(cors(corsOptions));
-
-// Or, to allow only specific origins:
-// app.use(cors({
-//   origin: 'http://localhost:3000' // Adjust this to match the URL of your frontend
-// }));
-
 // Parse JSON bodies
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Import routes
 app.use("/api", userRoutes,productRoutes);
@@ -52,19 +39,3 @@ sequelize.sync({ force: false }).then(() => {
     console.log(`Server is running on port ${PORT}`);
   });
 });
-
-
-// /**
-//  * Synchronizes the Sequelize models with the database and starts the server.
-//  * 
-//  * @param {boolean} force - Whether to force sync the models with the database.
-//  * @returns {Promise} - A promise that resolves when the server is running.
-//  */
-// sequelize.sync({ force: false }).then(() => {
-//   const PORT = process.env.PORT || 3001;
-//   const httpServer = http.createServer(app);
-
-//   httpServer.listen(PORT, () => {
-//     console.log(`Server is running on port ${PORT}`);
-//   });
-// });
