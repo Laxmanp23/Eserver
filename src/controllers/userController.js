@@ -36,7 +36,7 @@ const registerUser = async (req, res) => {
     // Generate token
     const token = crypto.randomBytes(48).toString("hex");
     const expiration = new Date();
-    expiration.setHours(expiration.getHours() + 1); // Set token to expire in 15days
+    expiration.setHours(expiration.getHours() + 360); // Set token to expire in 15days
     // Save token in the database
     await TokenStore.create({
       username: user.username,
@@ -87,7 +87,7 @@ const loginUser = async (req, res) => {
         if ((token.expirationTime = new Date())) {
           token.token = crypto.randomBytes(48).toString("hex");
           token.expirationTime = new Date();
-          token.expirationTime.setHours(token.expirationTime.getHours() + 1);
+          token.expirationTime.setHours(token.expirationTime.getHours() + 360);
           await token.save();
         }
       } else {
@@ -97,7 +97,7 @@ const loginUser = async (req, res) => {
           token: crypto.randomBytes(48).toString("hex"),
           expirationTime: new Date(),
         });
-        token.expirationTime.setHours(token.expirationTime.getHours() + 2);
+        token.expirationTime.setHours(token.expirationTime.getHours() + 360);
       }
       res.status(200).json({
         message: "User successfully logged in",
@@ -108,6 +108,8 @@ const loginUser = async (req, res) => {
         },
         token: token.token,
         expiretime: token.expirationTime,
+        userId : token.userId,
+        id : token.id,
       });
     }
   } catch (err) {

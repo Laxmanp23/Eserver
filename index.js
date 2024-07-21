@@ -33,7 +33,6 @@ const credentials = { key: privateKey, cert: certificate };
 sequelize.sync({ force: false }).then(() => {
   const PORT = process.env.PORT;
   const httpsServer = https.createServer(credentials , app);
-
   httpsServer.listen(PORT, () => {
     // console.log(`Serve is running on Port ${PORT}`);
     console.log(`Server is running on port ${PORT}`);
