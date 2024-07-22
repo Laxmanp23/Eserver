@@ -16,10 +16,4 @@ const sequelize = new Sequelize({
   },
   logging: true, // Enable debug logging
 });
-
 module.exports = sequelize;
-
-// || '129.154.34.108',
-// || 'ecommerce',
-// || 'ecommerce12345',
-// || 'ecommerce',

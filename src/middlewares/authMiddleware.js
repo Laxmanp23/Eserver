@@ -5,7 +5,6 @@ const authMiddleware = async (req, res, next) => {
  
   const token = req.header('Authorization').replace('Bearer ', '');
   try {
-    
     const tokenData = await TokenStore.findOne({
       where: {
         token,
@@ -34,6 +33,4 @@ const authMiddleware = async (req, res, next) => {
       message: "Not authorized to access this resource",});
   }
 };
-
-
 module.exports = authMiddleware;

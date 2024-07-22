@@ -16,8 +16,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Import routes
 app.use("/api", userRoutes,productRoutes);
-// app.use("/api/createproduct",productRoutes)
-
 // Default home /api route
 app.get("/", (req, res) => {
   res.send("welcome to Nodejs Server!");
@@ -38,4 +36,3 @@ sequelize.sync({ force: false }).then(() => {
     console.log(`Server is running on port ${PORT}`);
   });
 });
-// || 3001;

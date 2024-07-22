@@ -126,16 +126,6 @@ const logoutUser = async (req, res) => {
     token.expirationTime.setHours(token.expirationTime.getHours() + 0);
     await token.save();
   }
-
-  // const token = req.headers.authorization.substring(7);// Assuming you have the user ID in the request object
-  // // console.log(token)
-  // try {
-  //   await TokenStore.deleteOne({ token:token });
-  //   res.status(200).json({ message: "User successfully logged out" });
-  // } catch (err) {
-  //   console.error(err);
-  //   res.status(500).json({ message: "Logout failed", error: err.message });
-  // }
 };
 
 module.exports = {
