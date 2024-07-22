@@ -48,7 +48,7 @@ exports.getProductById = async (req, res) => {
   try {
     const { id } = req.body; // Assuming the parameter name in the route is 'id'
     const userId = req.user; // Assuming 'user' is attached to 'req' by your authentication middleware
-    
+
     const product = await Product.findOne({
       where: {
         id:id, // Use the ID to find the product
@@ -71,16 +71,19 @@ exports.getProductById = async (req, res) => {
 exports.updateProduct = async (req, res) => {
   try {
     const userId = req.user;
-// console.log(userId)
-    const { name, price, description, inStock } = req.body;
+const {id} = req.body;
+console.log("laxman product id is",id);
+    const {name, price, description, inStock } = req.body;
     const product = await Product.findOne({
       where: {
+        id:id,
         userId: userId,
       },
     });
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
+    product.id = id
     product.name = name;
     product.price = price;
     product.description = description;
@@ -95,12 +98,12 @@ exports.updateProduct = async (req, res) => {
 // Delete a product
 exports.deleteProduct = async (req, res) => {
   try {
-    const { productId } = req.parms;
+    const { id } = req.body;
     const userId = req.user;
 
     const product = await Product.findOne({
       where: {
-        id: productId,
+        id: id,
         userId: userId,
       },
     });
