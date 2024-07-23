@@ -14,6 +14,6 @@ const sequelize = new Sequelize({
     connectTimeout: 20000,
 
   },
-  logging: true, // Enable debug logging
+  // logging: true, // Enable debug logging
 });
 module.exports = sequelize;
