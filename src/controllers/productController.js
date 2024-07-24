@@ -1,7 +1,7 @@
 const Product = require("../models/product");
 const { Op } = require("sequelize");
 // Create a new product
-exports.createProduct = async (req, res) => {
+const createProduct = async (req, res) => {
   try {
     const { name, price, description, inStock } = req.body;
     const userId = req.user; // Assuming 'user' is attached to 'req' by your authentication middleware
@@ -30,7 +30,7 @@ exports.createProduct = async (req, res) => {
 };
 
 // Get all products
-exports.getProducts = async (req, res) => {
+const getProducts = async (req, res) => {
   try {
     const userId = req.user;
     // console.log(userId);
@@ -44,14 +44,14 @@ exports.getProducts = async (req, res) => {
 };
 
 // Get a single product by ID
-exports.getProductById = async (req, res) => {
+const getProductById = async (req, res) => {
   try {
     const { id } = req.body; // Assuming the parameter name in the route is 'id'
     const userId = req.user; // Assuming 'user' is attached to 'req' by your authentication middleware
 
     const product = await Product.findOne({
       where: {
-        id:id, // Use the ID to find the product
+        id: id, // Use the ID to find the product
         userId: userId, // Optional: if you want to ensure the product belongs to the user
       },
     });
@@ -66,24 +66,23 @@ exports.getProductById = async (req, res) => {
   }
 };
 
-
 // Update a product
-exports.updateProduct = async (req, res) => {
+const updateProduct = async (req, res) => {
   try {
     const userId = req.user;
-const {id} = req.body;
-console.log("laxman product id is",id);
-    const {name, price, description, inStock } = req.body;
+    const { id } = req.body;
+    console.log("laxman product id is", id);
+    const { name, price, description, inStock } = req.body;
     const product = await Product.findOne({
       where: {
-        id:id,
+        id: id,
         userId: userId,
       },
     });
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
-    product.id = id
+    product.id = id;
     product.name = name;
     product.price = price;
     product.description = description;
@@ -96,7 +95,7 @@ console.log("laxman product id is",id);
 };
 
 // Delete a product
-exports.deleteProduct = async (req, res) => {
+const deleteProduct = async (req, res) => {
   try {
     const { id } = req.body;
     const userId = req.user;
@@ -117,4 +116,10 @@ exports.deleteProduct = async (req, res) => {
   }
 };
 
-module.exports = exports;
+module.exports = {
+  createProduct,
+  getProducts,
+  getProductById,
+  updateProduct,
+  deleteProduct,
+};
