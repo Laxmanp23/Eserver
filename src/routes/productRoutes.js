@@ -6,8 +6,8 @@ const productController = require('../controllers/productController');
 const authMiddleware = require ('../middlewares/authMiddleware');
 
 // Protected routes
-router.post('/createProduct',authMiddleware , productController.createProduct);
-router.get('/getProducts', authMiddleware ,productController.getProducts);
+router.post('/createProduct', productController.createProduct);
+router.get('/getProducts',productController.getProducts);
 router.get('/productid', authMiddleware, productController.getProductById);
 
 // router.get('/product/:id',authMiddleware,productController.getProductById);

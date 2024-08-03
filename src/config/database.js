@@ -10,7 +10,7 @@ const sequelize = new Sequelize({
   database: process.env.DB_NAME || 'ecommerce',
   dialectOptions: {
     // for writing to database india kolkata time
-    timezone: 'Asia/Kolkata',
+    // timezone: 'Asia/Kolkata',
     connectTimeout: 20000,
 
   },

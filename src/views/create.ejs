@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Product</title>
+</head>
+<body>
+    <h1>Upload a New Product</h1>
+    <form action="/api/addProduct" method="POST" enctype="multipart/form-data">
+        <input type="text" value="text" name="name" placeholder="Product Name" required><br>
+        <input type="text" value="text" name="price" placeholder="Price" required><br>
+        <textarea name="description" value="description" placeholder="Description" required></textarea><br>
+        <!-- <input type="file" name="image" required><br> -->
+        <button type="submit">Upload Product</button>
+    </form>
+</body>
+</html>
