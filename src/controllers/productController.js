@@ -14,9 +14,7 @@ const productController = {
         if (!name || !price || !description || !categoryId || !userId) {
           return res.status(400).json({ message: 'Required fields are missing' });
         }
-
         const imageUrl = req.file ? `/uploads/${req.file.filename}` : null; // Get the image URL
-
         const newProduct = await Product.create({
           name,
           price,
@@ -38,35 +36,6 @@ const productController = {
     });
   },
 
-
-
-
-  // createProduct: async (req, res) => {
-  //   try {
-  //     const { name, price, description, inStock, imageUrl, categoryId, userId, quantity, sku, status } = req.body;
-  //     if (!name || !price || !description || !categoryId || !userId) {
-  //       return res.status(400).json({ message: "Required fields are missing" });
-  //     }
-  //     const newProduct = await Product.create({
-  //       name,
-  //       price,
-  //       description,
-  //       inStock,
-  //       imageUrl,
-  //       categoryId,
-  //       userId,
-  //       quantity,
-  //       sku,
-  //       status: status || 'active'
-  //     });
-  //     res.status(201).json(newProduct);
-  //   } catch (err) {
-  //     console.error("Failed to create product:", err);
-  //     res.status(500).json({ message: "Failed to create product", error: err.message });
-  //   }
-  // },
-
-  // Get all products
   getProducts: async (req, res) => {
     try {
       const products = await Product.findAll();
@@ -134,9 +103,6 @@ const productController = {
 };
 
 module.exports = productController;
-
-
-
 
 // const Product = require("../models/product");
 // const { Op } = require("sequelize");

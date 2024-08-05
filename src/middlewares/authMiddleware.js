@@ -1,19 +1,16 @@
 const user = require("../models/user");
 const { Op } = require("sequelize");
 const TokenStore = require("../utils/TokenStore");
+const { json } = require("body-parser");
 
 const authMiddleware = async (req, res, next) => {
   const authHeader = req.header("Authorization");
   if (!authHeader) {
     return res
-    .status(401)
-    .json({ error: "Unauthorized - No Authorization header provided" });
+      .status(401)
+      .json({ error: "Unauthorized - No Authorization header provided" });
   }
-  
   const token = authHeader.replace("Bearer ", "");
-  // console.log("Token:", token);
-  // console.log(authHeader)
-
   try {
     const tokenData = await TokenStore.findOne({
       where: {
@@ -38,5 +35,33 @@ const authMiddleware = async (req, res, next) => {
     });
   }
 };
+const adminMiddleware = async (req, res, next) => {
+  try {
+    console.log("Admin Middleware: Checking user role");
+    const User = await user.findByPk(req.user);
+    if (!User) {
+      console.log("Admin Middleware: User not found");
+      return res.status(404).json({ message: "User not found" });
+    }
+    if (User.role !== "admin") {
+      console.log(`Admin Middleware:${user.role} User role, not admin`);
+      console.log(User.role);
+      return res.status(403).json({ message: "Forbidden - Admins only" });
+    }
+    console.log("Admin Middleware: User is admin");
+    console.log(User.role);
+    next();
+  } catch (error) {
+    console.error("Error in adminMiddleware:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
-module.exports = authMiddleware;
+module.exports = {
+  authMiddleware,
+  adminMiddleware,
+};
+
+// Middleware working two middleware 
+// 1 authMiddleware
+// 2 adminmiddleware

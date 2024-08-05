@@ -3,10 +3,10 @@
 const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
-const authMiddleware = require ('../middlewares/authMiddleware');
+const {authMiddleware, adminMiddleware} = require ('../middlewares/authMiddleware');
 
 // Protected routes
-router.post('/createProduct', productController.createProduct);
+router.post('/createProduct',authMiddleware,adminMiddleware, productController.createProduct);
 router.get('/getProducts',productController.getProducts);
 router.get('/productid', authMiddleware, productController.getProductById);
 

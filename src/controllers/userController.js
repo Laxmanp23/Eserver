@@ -31,6 +31,7 @@ const registerUser = async (req, res) => {
       username,
       email,
       password: hashedPassword,
+      role: "user",
     });
     await user.save();
     // Generate token
@@ -51,6 +52,7 @@ const registerUser = async (req, res) => {
         id: user.id,
         username: user.username,
         email: user.email,
+        role: user.role,
       },
       token,
     });
@@ -105,6 +107,7 @@ const loginUser = async (req, res) => {
           id: user.id,
           username: user.username,
           email: user.email,
+          role: user.role,
         },
         token: token.token,
         expiretime: token.expirationTime,
