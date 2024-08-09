@@ -15,8 +15,9 @@ const Product = sequelize.define('Product', {
     allowNull: false,
   },
   inStock: {
-    type: DataTypes.BOOLEAN,
+    type: DataTypes.BIGINT,
     defaultValue: true,
+    
   },
   imageUrl: {
     type: DataTypes.STRING, // URL to the image of the product

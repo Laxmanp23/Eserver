@@ -1,7 +1,6 @@
 const user = require("../models/user");
 const { Op } = require("sequelize");
 const TokenStore = require("../utils/TokenStore");
-const { json } = require("body-parser");
 
 const authMiddleware = async (req, res, next) => {
   const authHeader = req.header("Authorization");

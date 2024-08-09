@@ -9,15 +9,17 @@ const path = require("path");
 // Define routes
 const userRoutes = require("./src/routes/userRoutes");
 const productRoutes = require('./src/routes/productRoutes');
+const uploadfile = require('./src/controllers/uploadfile')
 // Enable CORS for all routes
 app.use(cors());
 // Parse JSON bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// upload image
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Import routes
-app.use("/api", userRoutes,productRoutes);
+app.use("/api", userRoutes,productRoutes,uploadfile);
 // Default home /api route
 app.set('view engine', 'ejs'); // Set EJS as the view engine
 app.set('views',path.join(__dirname, 'src','views')); // Set the directory where EJS files are located
